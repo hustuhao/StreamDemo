@@ -19,8 +19,9 @@ public class StreamDemo {
     @Test
     public void testMapA() {
         List <Integer> list = Arrays.asList(1,2,3,4,5);
-        List<Integer> collect = list.stream().map(n -> n * n).collect(Collectors.toList());
-        System.out.println(collect);
+        // n = n * n
+        List<Integer> resutl = list.stream().map(n -> n * n).collect(Collectors.toList());
+        System.out.println(resutl);
     }
 
     @Test
@@ -49,12 +50,28 @@ public class StreamDemo {
         studentBOList.add(studentB);
         studentBOList.add(studentC);
         studentBOList.add(studentD);
-
-        List<Integer> reuslt = studentBOList.stream().filter(studentBO -> studentBO.getId() != null).map(studentBO -> {
+        //筛选id不为空的元素
+        List<Integer> reuslt1 = studentBOList.stream().filter(studentBO -> studentBO.getId() != null).map(studentBO -> {
             Integer res = studentBO.getScore() * studentBO.getScore();
             return res;
         }).collect(Collectors.toList());
-        System.out.println(reuslt);
+
+        System.out.println(reuslt1);
+
+        //筛选score的平方大于 700的学生，并返回 score的平方
+        List<Integer> reuslt2 = studentBOList.stream().filter(studentBO -> {
+            if (studentBO.getId() == null) {
+                return false;
+            }
+            Integer score2 = studentBO.getScore() * studentBO.getScore();
+            return score2 > 7000;
+        }).map(studentBO -> {
+            Integer res = studentBO.getScore() * studentBO.getScore();
+            return res;
+        }).collect(Collectors.toList());
+        System.out.println(reuslt2);
+
+
     }
 
     @Test
