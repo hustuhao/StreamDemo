@@ -7,6 +7,7 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -47,6 +48,13 @@ public class StreamDemo {
     }
 
     @Test
+    public void createStream() {
+        //1、Collection 接口
+
+        //2、Arrays
+    }
+
+    @Test
     public void testMapA() {
         List <Integer> list = Arrays.asList(1,2,3,4,5);
         // n = n * n
@@ -77,8 +85,6 @@ public class StreamDemo {
             return res;
         }).collect(Collectors.toList());
         System.out.println(reuslt2);
-
-
     }
 
     @Test
@@ -86,6 +92,15 @@ public class StreamDemo {
         List <Integer> list = Arrays.asList(1, 2, 2, 3, 4, 5, 5);
         List<Integer> result = list.stream().sorted().distinct().collect(Collectors.toList());
         System.out.println(result);
+
+        StudentBO studentE = new StudentBO();
+        studentE.setId(3);
+        studentE.setAge(19);
+        studentE.setName("me");
+        studentE.setScore(70);
+        studentBOList.add(studentE);
+        List<StudentBO> list1 = studentBOList.stream().distinct().collect(Collectors.toList());
+
     }
 
     @Test
@@ -97,6 +112,33 @@ public class StreamDemo {
                     return s1.getAge().compareTo(s2.getAge());
                 }).collect(Collectors.toList());
         System.out.println(result);
-
     }
+
+    @Test
+    public void testSkip() {
+        List <Integer> list = Arrays.asList(1, 2, 2, 3, 4, 5, 5);
+        List<Integer> result = list.stream().skip(5).collect(Collectors.toList());
+        // [5, 5]
+        System.out.println(result);
+    }
+
+    @Test
+    public void testLimit() {
+        List <Integer> list = Arrays.asList(1, 2, 2, 3, 4, 5, 5);
+        List<Integer> result = list.stream().limit(5).collect(Collectors.toList());
+        // [1, 2, 2, 3, 4]
+        System.out.println(result);
+    }
+
+    /********************终端操作********************/
+    @Test
+    public void testCollect() {
+        Map<Integer, String> result
+                = studentBOList.stream().collect(Collectors.toMap(StudentBO::getId, StudentBO::getName));
+
+        Map<Integer, StudentBO> res = studentBOList.stream().collect(Collectors.toMap(StudentBO::getId, bo -> {
+            return bo;
+        }));
+    }
+
 }
