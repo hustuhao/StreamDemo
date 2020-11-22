@@ -17,6 +17,44 @@ public class StudentBO {
 
     Integer score;
 
+    /**身高 cm **/
+    Integer height;
+
+    /** 体重 kg**/
+    Integer weight;
+    /**
+     * 获取学生的身体质量指数
+     * @return
+     */
+    public Double getStudentBMI() {
+        return (weight * 10000.0 / (height * height));
+    }
+
+    public static int compare(StudentBO s1, StudentBO s2) {
+        return (s1.getId().compareTo(s2.id));
+    }
+    public Integer getHeight() {
+        return height;
+    }
+
+    public void setHeight(Integer height) {
+        this.height = height;
+    }
+
+    public Integer getWeight() {
+        return weight;
+    }
+
+    public void setWeight(Integer weight) {
+        this.weight = weight;
+    }
+
+
+
+
+
+
+
     public Integer getId() {
         return id;
     }
