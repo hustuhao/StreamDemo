@@ -235,8 +235,8 @@ public class StreamDemoTest {
 
     @Test
     public void testReduce() {
-
         List<Integer> integers = Arrays.asList(1, 1, 2, 3, 4, 5, 6, 7, 8, 9);
+
         //求和的两种方式
         long sum1 = integers.stream().reduce(0, (a,b)->(a+b));
         long sum2 = integers.stream().reduce(0, Integer::sum);
@@ -299,5 +299,14 @@ public class StreamDemoTest {
         //{1=[StudentBO{id=1, name='Tom', age=20, score=100}], 2=[StudentBO{id=2, name='Ken', age=19, score=60}, StudentBO{id=3, name='Bob', age=19, score=70}]}
         System.out.println(classStudentMap);
     }
+
+    @Test
+    public void testForeach() {
+        List<Integer> integers = Arrays.asList(1, 1, 2, 3, 4, 5, 6, 7, 8, 9);
+        //打印所有的元素
+        integers.stream().forEach(System.out::print);
+    }
+
+
 
 }
