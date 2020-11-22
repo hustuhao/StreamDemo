@@ -3,18 +3,24 @@ package bo;
 import java.util.Objects;
 
 /**
- * @author tuhao
+ * @author turato
  * @date 2020/11/15 9:56 下午
  * @desc
  */
 public class StudentBO {
-
+    /** 学生id **/
     Integer id;
 
+    /** 学生姓名 **/
     String name;
 
-    Integer age;
+    /** 班级id **/
+    Integer classId;
 
+    /** 学生年龄 **/
+
+    Integer age;
+    /** 分数 **/
     Integer score;
 
     /**身高 cm **/
@@ -30,6 +36,12 @@ public class StudentBO {
         return (weight * 10000.0 / (height * height));
     }
 
+    /**
+     * 根据id大小对学生进行比较
+     * @param s1
+     * @param s2
+     * @return
+     */
     public static int compare(StudentBO s1, StudentBO s2) {
         return (s1.getId().compareTo(s2.id));
     }
@@ -48,12 +60,6 @@ public class StudentBO {
     public void setWeight(Integer weight) {
         this.weight = weight;
     }
-
-
-
-
-
-
 
     public Integer getId() {
         return id;
@@ -97,16 +103,11 @@ public class StudentBO {
                 '}';
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        StudentBO studentBO = (StudentBO) o;
-        return Objects.equals(id, studentBO.id);
+    public Integer getClassId() {
+        return classId;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, name, age, score);
+    public void setClassId(Integer classId) {
+        this.classId = classId;
     }
 }
