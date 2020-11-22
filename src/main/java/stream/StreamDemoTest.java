@@ -278,34 +278,26 @@ public class StreamDemoTest {
                 .collect(Collectors.partitioningBy(bo -> {
                     return bo.getScore() > 60;
                 }));
-    }
 
-    @Test
-    public void testSummingInt() {
         //计算所有学生的分数之和
         Integer sum1 = studentBOList.stream()
                 .filter(bo -> bo.getId() != null)
                 .collect(Collectors.summingInt(StudentBO::getScore));
-    }
 
-
-    @Test
-    public void testGroupingBy() {
         /**
          * 将学生按照班级分类
          */
         Map<Integer, List<StudentBO>> classStudentMap = studentBOList.stream()
                 .filter(bo -> bo.getId() != null )
                 .collect(Collectors
-                .groupingBy(
-                        StudentBO::getClassId,
-                        TreeMap::new,
-                        Collectors.toList()
-                )
-        );
+                        .groupingBy(
+                                StudentBO::getClassId,
+                                TreeMap::new,
+                                Collectors.toList()
+                        )
+                );
         //{1=[StudentBO{id=1, name='Tom', age=20, score=100}], 2=[StudentBO{id=2, name='Ken', age=19, score=60}, StudentBO{id=3, name='Bob', age=19, score=70}]}
         System.out.println(classStudentMap);
     }
-
 
 }
