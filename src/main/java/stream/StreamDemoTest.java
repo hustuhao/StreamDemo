@@ -258,9 +258,7 @@ public class StreamDemoTest {
          */
         Map<Integer, StudentBO> result2 = studentBOList.stream()
                 .filter( bo -> bo.getId() != null)
-                .collect(Collectors.toMap(StudentBO::getId, bo -> {
-            return bo;
-        }));
+                .collect(Collectors.toMap(StudentBO::getId, bo -> bo));
 
         /**
          * 根据某个属性进行分类
@@ -307,6 +305,39 @@ public class StreamDemoTest {
         integers.stream().forEach(System.out::print);
     }
 
+    @Test
+    public void testFindFirst() {
 
+    }
+
+    @Test
+    public void testParallel() {
+
+        long startTime = System.currentTimeMillis();
+        List<Double> result1 = studentBOList.stream().filter( bo -> null != bo.getId()).parallel().map(bo -> {
+            // 少了这个休眠，Runtime1耗时更长 1ms VS 92ms
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            return bo.getStudentBMI() * bo.getStudentBMI();
+        }).collect(Collectors.toList());
+        long endTime = System.currentTimeMillis();
+        System.out.println("Runtime1:"+ (endTime-startTime));
+
+        startTime = System.currentTimeMillis();
+        List<Double> result2 = studentBOList.stream().filter( bo -> null != bo.getId()).map(bo -> {
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            return bo.getStudentBMI() * bo.getStudentBMI();
+        }).collect(Collectors.toList());
+        endTime = System.currentTimeMillis();
+        System.out.println("Runtime2:"+ (endTime-startTime));
+
+    }
 
 }
