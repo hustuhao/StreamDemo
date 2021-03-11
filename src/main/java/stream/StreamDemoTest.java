@@ -305,16 +305,23 @@ public class StreamDemoTest {
         integers.stream().forEach(System.out::print);
     }
 
+    /**
+     * 结论：Filter 和 findFirst 组合：找到第一个就返回
+     */
     @Test
     public void testFindFirst() {
-
+        Optional<StudentBO> aOptional = studentBOList.stream()
+                .filter(bo -> {
+                    System.out.println(bo);
+                    return null != bo.getId();
+                }).findFirst();
+        //result --> StudentBO{id=1, name='Tom', age=20, score=100}
     }
 
     @Test
     public void testParallel() {
-
         long startTime = System.currentTimeMillis();
-        List<Double> result1 = studentBOList.stream().filter( bo -> null != bo.getId()).parallel().map(bo -> {
+        List<Double> result1 = studentBOList.stream().filter(bo -> null != bo.getId()).parallel().map(bo -> {
             // 少了这个休眠，Runtime1耗时更长 1ms VS 92ms
             try {
                 Thread.sleep(1000);
@@ -337,7 +344,6 @@ public class StreamDemoTest {
         }).collect(Collectors.toList());
         endTime = System.currentTimeMillis();
         System.out.println("Runtime2:"+ (endTime-startTime));
-
     }
 
 }
