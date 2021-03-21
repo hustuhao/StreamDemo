@@ -7,6 +7,7 @@ import org.junit.Test;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 /**
  * @author tuhao
@@ -119,7 +120,7 @@ public class StreamDemoTest {
          * 对数字去重
          */
         List <Integer> list = Arrays.asList(1, 2, 2, 3, 4, 5, 5);
-        List<Integer> result = list.stream().sorted().distinct().collect(Collectors.toList());
+        List<Integer> result = list.stream().sorted().collect(Collectors.toList());
         System.out.println(result);
 
         /**
@@ -132,7 +133,17 @@ public class StreamDemoTest {
         studentE.setClassId(2);
         studentE.setScore(70);
         studentBOList.add(studentE);
-        List<StudentBO> list1 = studentBOList.stream().distinct().collect(Collectors.toList());
+
+        /**
+         * 1、Map 去重，当 key 出现重复的时候，会抛出异常：java.lang.IllegalStateException
+         * 2、value 不能为 null
+         *
+         * Arrays.as(1, 1, 2, 3, 3, 4, 4) --> Stream.of(1, 1, 2, 3, 3, 4, 4)
+         */
+        Map<Integer, Integer> idAndValueMap = Stream.of(1, 1, 2, 3, 3, 4, 4)
+                .collect(Collectors.toMap(temp -> temp, temp -> temp * temp, (v1, v2) -> v1));
+        System.out.println(idAndValueMap);
+
     }
 
     @Test
@@ -318,6 +329,9 @@ public class StreamDemoTest {
         //result --> StudentBO{id=1, name='Tom', age=20, score=100}
     }
 
+    /**
+     * 注意使用并行流需要考虑并发问题。
+     */
     @Test
     public void testParallel() {
         long startTime = System.currentTimeMillis();
