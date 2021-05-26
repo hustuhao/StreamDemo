@@ -3,7 +3,6 @@ package collections;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.net.CookieHandler;
 import java.util.*;
 
 /**
@@ -46,6 +45,30 @@ public class CollectionsTest {
 
         //线程安全的list
         Collections.synchronizedList(integers);
+    }
+
+    /**
+     * 求交集
+     */
+    @Test
+    public void testCommonObject() {
+        ArrayList<Integer> list1 = new ArrayList<>();
+        list1.add(1);
+        list1.add(2);
+
+        ArrayList<Integer> list2 = new ArrayList<>();
+        list2.add(2);
+        list2.add(3);
+
+        ArrayList<List<Integer>> all = new ArrayList<>();
+        all.add(list1);
+        all.add(list2);
+
+        List<Integer> result = all.stream().reduce((l1, l2) -> {
+            l1.retainAll(list2);
+            return l1;
+        }).orElse(Collections.emptyList());
+        Assert.assertEquals(result.size(), 1);
     }
 
 }
