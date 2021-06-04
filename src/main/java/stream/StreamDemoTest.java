@@ -307,6 +307,19 @@ public class StreamDemoTest {
                 );
         //{1=[StudentBO{id=1, name='Tom', age=20, score=100}], 2=[StudentBO{id=2, name='Ken', age=19, score=60}, StudentBO{id=3, name='Bob', age=19, score=70}]}
         System.out.println(classStudentMap);
+
+        /**
+         * 多条件分类:按照班级和姓名分类
+         */
+        TreeMap<String, List<StudentBO>> collect = studentBOList.stream()
+                .filter(bo -> bo.getId() != null)
+                .collect(Collectors
+                        .groupingBy(
+                                x -> String.format("%d|%s", x.getClassId(), x.getName()),
+                                TreeMap::new,
+                                Collectors.toList()
+                        )
+                );
     }
 
     @Test
